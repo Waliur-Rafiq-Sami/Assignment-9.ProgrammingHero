@@ -4,12 +4,14 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./Root/Root";
 import HomePage from "./HomePage/HomePage";
+import ErrorPage from "./ErrorPage/ErrorPage";
+import PrivateContext from "./PrivacyContext/PrivateContext";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root></Root>,
-    // errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -21,6 +23,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <PrivateContext>
+      <RouterProvider router={router} />
+    </PrivateContext>
   </StrictMode>
 );
