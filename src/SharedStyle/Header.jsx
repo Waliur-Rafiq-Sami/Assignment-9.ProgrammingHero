@@ -20,7 +20,7 @@ const Header = () => {
              before:transition-all before:duration-300 before:ease-in-out before:rounded-full 
              hover:before:w-full hover:before:left-0"
       >
-        All House
+        House
       </Link>
       <Link
         className="relative md:px-2 font-semibold text-gray-800 transition duration-300 hover:text-blue-600 
@@ -28,7 +28,7 @@ const Header = () => {
              before:transition-all before:duration-300 before:ease-in-out before:rounded-full 
              hover:before:w-full hover:before:left-0"
       >
-        Add Your Card
+        Card
       </Link>
       <Link
         className="relative md:px-2 font-semibold text-gray-800 transition duration-300 hover:text-blue-600 
@@ -36,7 +36,7 @@ const Header = () => {
              before:transition-all before:duration-300 before:ease-in-out before:rounded-full 
              hover:before:w-full hover:before:left-0"
       >
-        Your Profile
+        Profile
       </Link>
       <Link
         className="relative md:px-2 font-semibold text-gray-800 transition duration-300 hover:text-blue-600 
@@ -50,9 +50,9 @@ const Header = () => {
   );
   return (
     <div className="bg-gradient-to-r static from-[#8bb9ffcc] via-[#9d73ff7a] to-[#2ac525dc] ... shadow-xl">
-      <div className="container py-3 mx-auto text-center heavenly flex md:flex-row flex-col justify-between font-semibold">
+      <div className="container py-3 mx-auto text-center heavenly flex md:flex-row flex-col justify-between font-semibold items-center">
         <div className="md:block hidden"></div>
-        <div className="flex md:gap-5 gap-3 text-sm  px-2 mb-3 md:pb-0">
+        <div className="flex gap-5  text-sm md:text-lg  px-2 mb-3 md:pb-0">
           {link}
         </div>
         <div className="flex gap-2 items-end px-3 md:px-0 md:flex-row flex-row-reverse">

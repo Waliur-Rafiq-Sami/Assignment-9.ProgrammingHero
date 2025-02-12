@@ -1,6 +1,7 @@
 import QuickInfo from "./QuickInfo";
 import Header from "./../SharedStyle/Header";
-import MainContainer from "./MainContainer";
+import ImageSlider from "./imageSlider";
+import CardComponents from "./CardComponents";
 
 const HomePage = () => {
   return (
@@ -13,9 +14,11 @@ const HomePage = () => {
       <div>
         <Header></Header>
       </div>
-      {/* main home components */}
-      <div className="">
-        <MainContainer></MainContainer>
+      {/* Image components */}
+      <div className="">{/* <ImageSlider></ImageSlider> */}</div>
+      {/* Card components */}
+      <div className="border-y-4 border-[#07ccc2] ">
+        <CardComponents></CardComponents>
       </div>
     </div>
   );

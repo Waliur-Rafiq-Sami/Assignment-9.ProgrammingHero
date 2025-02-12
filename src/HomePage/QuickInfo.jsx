@@ -12,6 +12,7 @@ import { IoLogoFacebook } from "react-icons/io";
 import { FaFacebookMessenger } from "react-icons/fa";
 import { PiWhatsappLogoBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const QuickInfo = () => {
   const { loginRegistrationBtn, createUserWithGoogle, createUserWithGithub } =
@@ -32,6 +33,28 @@ const QuickInfo = () => {
       </Link>
     </div>
   );
+
+  const facebookError = () => {
+    Swal.fire({
+      title: "Sorry!\nYou can't login use facebook",
+      icon: "error",
+      showClass: {
+        popup: `
+        animate__animated
+        animate__fadeInUp
+        animate__faster
+      `,
+      },
+      hideClass: {
+        popup: `
+        animate__animated
+        animate__fadeOutDown
+        animate__faster
+      `,
+      },
+    });
+  };
+
   return (
     <>
       <div className="py-2 px-3 flex justify-between items-center md:">
@@ -94,7 +117,12 @@ const QuickInfo = () => {
               src={GoogleImg}
               alt=""
             />
-            <img className="w-6 hover:scale-113" src={facebookImg} alt="" />
+            <img
+              onClick={facebookError}
+              className="w-6 hover:scale-113"
+              src={facebookImg}
+              alt=""
+            />
             <img
               onClick={createUserWithGithub}
               className="w-6 hover:scale-113"
