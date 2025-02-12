@@ -1,12 +1,42 @@
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { createContext, useState } from "react";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 export const UsePrivateContext = createContext();
+import { GoogleAuthProvider } from "firebase/auth";
+import auth from "./firebase.config";
+import { GithubAuthProvider } from "firebase/auth";
 
 const PrivateContext = ({ children }) => {
   const [closeEye, setCloseEye] = useState(true);
   const [isRegistration, setIsRegistration] = useState(false);
-  // const []
+  // const [user, setUser] = useState([]);
 
+  // providers
+  const googleProvider = new GoogleAuthProvider();
+  const githubProvider = new GithubAuthProvider();
+
+  // create user with email and password
+  // const createUserWithEmailAndPass = () => {
+  //   return createUserWithEmailAndPassword()
+  //     .then((user) => user.user)
+  //     .catch((e) => console.error(e));
+  // };
+
+  // create user with Google
+  const createUserWithGoogle = () => {
+    signInWithPopup(auth, googleProvider)
+      .then((user) => user.user)
+      .catch((e) => console.error(e));
+  };
+
+  // create user with Github
+  const createUserWithGithub = () => {
+    signInWithPopup(auth, githubProvider)
+      .then((user) => user.user)
+      .catch((e) => console.error(e));
+  };
+
+  // Login Registration Button
   const loginRegistrationBtn = () => {
     const modal = document.getElementById("my_modal_5");
     if (modal) {
@@ -23,6 +53,7 @@ const PrivateContext = ({ children }) => {
   //   }
   // }, []);
 
+  //PopUp windrow
   const loginOrRegistrationPopUp = (
     <>
       <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
@@ -220,7 +251,11 @@ const PrivateContext = ({ children }) => {
     </>
   );
 
-  const value = { loginRegistrationBtn };
+  const value = {
+    loginRegistrationBtn,
+    createUserWithGoogle,
+    createUserWithGithub,
+  };
   return (
     <UsePrivateContext.Provider value={value}>
       {children}

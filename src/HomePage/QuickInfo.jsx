@@ -14,7 +14,8 @@ import { PiWhatsappLogoBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
 
 const QuickInfo = () => {
-  const { loginRegistrationBtn } = useContext(UsePrivateContext);
+  const { loginRegistrationBtn, createUserWithGoogle, createUserWithGithub } =
+    useContext(UsePrivateContext);
   const social = (
     <div className="flex gap-1">
       <Link to="https://facebook.com" target="_blank" rel="noopener noreferrer">
@@ -87,9 +88,19 @@ const QuickInfo = () => {
             </span>
           </button>
           <div className="flex gap-3 mt-2 justify-center">
-            <img className="w-6 hover:scale-113" src={GoogleImg} alt="" />
+            <img
+              onClick={createUserWithGoogle}
+              className="w-6 hover:scale-113"
+              src={GoogleImg}
+              alt=""
+            />
             <img className="w-6 hover:scale-113" src={facebookImg} alt="" />
-            <img className="w-6 hover:scale-113" src={GithubImg} alt="" />
+            <img
+              onClick={createUserWithGithub}
+              className="w-6 hover:scale-113"
+              src={GithubImg}
+              alt=""
+            />
           </div>
         </div>
       </div>
