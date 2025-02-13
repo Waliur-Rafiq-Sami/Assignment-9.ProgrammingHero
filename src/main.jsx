@@ -6,6 +6,7 @@ import Root from "./Root/Root";
 import HomePage from "./HomePage/HomePage";
 import ErrorPage from "./ErrorPage/ErrorPage";
 import PrivateContext from "./PrivacyContext/PrivateContext";
+import DetailsCardPopUp from "./HomePage/DetailsCardPopUp";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
         element: <HomePage></HomePage>,
       },
     ],
+  },
+  {
+    path: "/:id",
+    element: <DetailsCardPopUp></DetailsCardPopUp>,
   },
 ]);
 

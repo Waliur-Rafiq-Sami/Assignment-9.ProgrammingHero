@@ -31,7 +31,7 @@ const CardComponents = () => {
 
   return (
     <div>
-      <div className="container mx-auto">
+      <div className="container mx-auto scroll-smooth" id="House">
         <h2 className="text-center md:py-8 md:text-6xl font-bold font-dancing">
           House information
         </h2>
