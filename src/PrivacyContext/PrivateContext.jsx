@@ -1,39 +1,72 @@
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { createContext, useState } from "react";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
+import { createContext, useEffect, useState } from "react";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 export const UsePrivateContext = createContext();
 import { GoogleAuthProvider } from "firebase/auth";
 import auth from "./firebase.config";
 import { GithubAuthProvider } from "firebase/auth";
+import Swal from "sweetalert2";
 
 const PrivateContext = ({ children }) => {
   const [closeEye, setCloseEye] = useState(true);
   const [isRegistration, setIsRegistration] = useState(false);
-  // const [user, setUser] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
   // providers
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
 
-  // create user with email and password
-  // const createUserWithEmailAndPass = () => {
-  //   return createUserWithEmailAndPassword()
-  //     .then((user) => user.user)
-  //     .catch((e) => console.error(e));
-  // };
-
   // create user with Google
   const createUserWithGoogle = () => {
+    setLoading(true);
     signInWithPopup(auth, googleProvider)
-      .then((user) => user.user)
-      .catch((e) => console.error(e));
+      .then((user) => {
+        // console.log(user.user);
+        setUser(user.user);
+        Swal.fire({
+          title: "successfully\n Sign in With Google.",
+          icon: "success",
+          draggable: true,
+        });
+      })
+      .catch((e) => {
+        Swal.fire({
+          title: `${e.message}`,
+          icon: "error",
+          draggable: true,
+        });
+        console.error(e.message);
+      });
   };
 
   // create user with Github
   const createUserWithGithub = () => {
+    setLoading(true);
     signInWithPopup(auth, githubProvider)
-      .then((user) => user.user)
-      .catch((e) => console.error(e));
+      .then((user) => {
+        Swal.fire({
+          title: "successfully\n Sign in with Github",
+          icon: "success",
+          draggable: true,
+        });
+        // console.log(user.user);
+        setUser(user.user);
+      })
+      .catch((e) => {
+        Swal.fire({
+          title: `${e.message}`,
+          icon: "error",
+          draggable: true,
+        });
+        console.error(e.message);
+      });
   };
 
   // Login Registration Button
@@ -43,15 +76,96 @@ const PrivateContext = ({ children }) => {
       modal.showModal();
     }
   };
-  // From data handle
-  const getValueOfFrom = () => {};
 
-  // useEffect(() => {
-  //   const modal = document.getElementById("my_modal_5");
-  //   if (modal) {
-  //     modal.showModal();
-  //   }
-  // }, []);
+  // handle Registration from
+  const HandleRegistrationFrom = (e) => {
+    setLoading(true);
+
+    e.preventDefault();
+    const form = e.target;
+    const first_name = form.first_name.value;
+    const last_name = form.first_name.value;
+    const photo = form.photo.value;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    const allValue = { first_name, last_name, photo, email, password };
+    console.log(allValue);
+    // create user with email and password
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((user) => {
+        console.log(user.user);
+        document.getElementById("my_modal_5").close();
+        e.target.reset();
+        Swal.fire({
+          title: "User Created successfully",
+          icon: "success",
+          draggable: true,
+        });
+      })
+      .catch((e) => {
+        document.getElementById("my_modal_5").close();
+        console.error(e.message);
+        Swal.fire({
+          title: `${e.message}`,
+          icon: "error",
+          draggable: true,
+        });
+      });
+  };
+
+  // handle Login from
+  const handleLoginFrom = (e) => {
+    setLoading(true);
+
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    // create user with email and password
+    signInWithEmailAndPassword(auth, email, password)
+      .then((user) => {
+        // console.log(user.user);
+        document.getElementById("my_modal_5").close();
+        e.target.reset();
+        Swal.fire({
+          title: "Sign In Successfully",
+          icon: "success",
+          draggable: true,
+        });
+      })
+      .catch((e) => {
+        document.getElementById("my_modal_5").close();
+        console.error(e.message);
+        Swal.fire({
+          title: "Sorry!\nInvalid user name or password",
+          icon: "error",
+          draggable: true,
+        });
+      });
+  };
+
+  // handle Logout
+  const handleLogOut = () => {
+    setLoading(true);
+    signOut(auth)
+      .then(() => {
+        Swal.fire({
+          title: "you are successfully Log out",
+          icon: "warning",
+          draggable: true,
+        });
+      })
+      .catch((e) => {
+        Swal.fire({
+          title: `${e.message}`,
+          icon: "error",
+          draggable: true,
+        });
+        console.error(e.message);
+      });
+  };
 
   //PopUp windrow
   const loginOrRegistrationPopUp = (
@@ -69,7 +183,7 @@ const PrivateContext = ({ children }) => {
             // Registration section
             <>
               {/* //from Body for Registration*/}
-              <form onSubmit={getValueOfFrom} className="bg-white">
+              <form onSubmit={HandleRegistrationFrom} className="bg-white">
                 <h2 className="underline md:text-3xl text-xl font-semibold text-center text-gray-700 mb-4">
                   Please Register
                 </h2>
@@ -81,6 +195,7 @@ const PrivateContext = ({ children }) => {
                     </label>
                     <input
                       type="text"
+                      name="first_name"
                       placeholder="Enter First name"
                       className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                       required
@@ -92,6 +207,7 @@ const PrivateContext = ({ children }) => {
                     </label>
                     <input
                       type="text"
+                      name="last_name"
                       placeholder="Enter Last name"
                       className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                       required
@@ -106,6 +222,7 @@ const PrivateContext = ({ children }) => {
                   </label>
                   <input
                     type="url"
+                    name="photo"
                     placeholder="Enter Photo URL"
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                     required
@@ -119,6 +236,7 @@ const PrivateContext = ({ children }) => {
                   </label>
                   <input
                     type="email"
+                    name="email"
                     placeholder="Enter your email"
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                     required
@@ -132,6 +250,7 @@ const PrivateContext = ({ children }) => {
                   </label>
                   <input
                     type={closeEye ? "password" : "text"}
+                    name="password"
                     placeholder="Enter your password"
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                     required
@@ -175,7 +294,7 @@ const PrivateContext = ({ children }) => {
             // LoginSection
             <>
               {/* //from Body for Registration*/}
-              <form onSubmit={getValueOfFrom} className="bg-white">
+              <form onSubmit={handleLoginFrom} className="bg-white">
                 <h2 className="underline md:text-3xl text-xl font-semibold text-center text-gray-700 mb-4">
                   Please Login
                 </h2>
@@ -186,6 +305,7 @@ const PrivateContext = ({ children }) => {
                   </label>
                   <input
                     type="email"
+                    name="email"
                     placeholder="Enter your email"
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
@@ -199,6 +319,7 @@ const PrivateContext = ({ children }) => {
                   </label>
                   <input
                     type={closeEye ? "password" : "text"}
+                    name="password"
                     placeholder="Enter your password"
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
@@ -251,11 +372,27 @@ const PrivateContext = ({ children }) => {
     </>
   );
 
+  //on auth state change
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  //pass value of use context
   const value = {
     loginRegistrationBtn,
     createUserWithGoogle,
     createUserWithGithub,
+    handleLogOut,
+    loading,
+    user,
   };
+
   return (
     <UsePrivateContext.Provider value={value}>
       {children}

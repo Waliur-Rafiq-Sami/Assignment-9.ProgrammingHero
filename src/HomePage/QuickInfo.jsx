@@ -13,10 +13,16 @@ import { FaFacebookMessenger } from "react-icons/fa";
 import { PiWhatsappLogoBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { BsFillHousesFill } from "react-icons/bs";
 
 const QuickInfo = () => {
-  const { loginRegistrationBtn, createUserWithGoogle, createUserWithGithub } =
-    useContext(UsePrivateContext);
+  const {
+    user,
+    handleLogOut,
+    loginRegistrationBtn,
+    createUserWithGoogle,
+    createUserWithGithub,
+  } = useContext(UsePrivateContext);
   const social = (
     <div className="flex gap-1">
       <Link to="https://facebook.com" target="_blank" rel="noopener noreferrer">
@@ -100,37 +106,58 @@ const QuickInfo = () => {
         <div className="hidden md:block text-6xl font-bold font-dancing">
           <h2>Land Nest</h2>
         </div>
-        <div className="px-2">
-          <button
-            onClick={loginRegistrationBtn}
-            className="btn btn-outline md:btn-md btn-sm border-green-600 flex items-center px-2 py-1 text-lg hover:scale-105 transition-transform duration-300 hover:shadow-[#000] hover:bg-[#b9ff91dc]"
-          >
-            <RiLoginBoxFill className="text-[#981abec0] font-bold" />
-            <span className="-ml-1 text-[#0741df] font-semibold">
-              Login/Register
-            </span>
-          </button>
-          <div className="flex gap-3 mt-2 justify-center">
-            <img
-              onClick={createUserWithGoogle}
-              className="w-6 hover:scale-113"
-              src={GoogleImg}
-              alt=""
-            />
-            <img
-              onClick={facebookError}
-              className="w-6 hover:scale-113"
-              src={facebookImg}
-              alt=""
-            />
-            <img
-              onClick={createUserWithGithub}
-              className="w-6 hover:scale-113"
-              src={GithubImg}
-              alt=""
-            />
-          </div>
-        </div>
+        {user ? (
+          <>
+            <div className="flex items-center gap-7">
+              <div className="text-xl text-[#c9681a] bg-[#a689aa4b] p-3 rounded-full hover:scale-103 hover:cursor-pointer">
+                <BsFillHousesFill />
+              </div>
+              <button
+                onClick={handleLogOut}
+                className="btn btn-outline md:btn-md btn-sm border-green-600 flex items-center px-2 py-1 text-lg hover:scale-105 transition-transform duration-300 hover:shadow-[#000] hover:bg-[#b9ff91dc]"
+              >
+                <RiLoginBoxFill className="text-[#981abec0] font-bold" />
+                <span className="-ml-1 text-[#0741df] font-semibold">
+                  Log Out
+                </span>
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="px-2">
+              <button
+                onClick={loginRegistrationBtn}
+                className="btn btn-outline md:btn-md btn-sm border-green-600 flex items-center px-2 py-1 text-lg hover:scale-105 transition-transform duration-300 hover:shadow-[#000] hover:bg-[#b9ff91dc]"
+              >
+                <RiLoginBoxFill className="text-[#981abec0] font-bold" />
+                <span className="-ml-1 text-[#0741df] font-semibold">
+                  Login/Register
+                </span>
+              </button>
+              <div className="flex gap-3 mt-2 justify-center">
+                <img
+                  onClick={createUserWithGoogle}
+                  className="w-6 hover:scale-113"
+                  src={GoogleImg}
+                  alt=""
+                />
+                <img
+                  onClick={facebookError}
+                  className="w-6 hover:scale-113"
+                  src={facebookImg}
+                  alt=""
+                />
+                <img
+                  onClick={createUserWithGithub}
+                  className="w-6 hover:scale-113"
+                  src={GithubImg}
+                  alt=""
+                />
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <div className="md:hidden p-2 text-md">
         <div className="flex md:gap-5 gap-0 md:flex-row flex-col">
