@@ -5,7 +5,12 @@ const Footer = () => {
       <div className="footer bg-[#00000036] text-black items-center p-4">
         <aside className="grid-flow-col items-center">
           <img className="w-35" src={logoImg} alt="" />
-          <p>Copyright © {new Date().getFullYear()} - Waliur Rafiq Sami</p>
+          <p className="text-2xl">
+            Copyright © {new Date().getFullYear()} -{" "}
+            <span className="text-3xl text-[#0e12dd] font-semibold">
+              Waliur Rafiq SAMI
+            </span>
+          </p>
         </aside>
         <nav className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
           <a>
