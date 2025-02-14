@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import HomePage from "./HomePage";
 import { PrivateCardInfo } from "../PrivateRoute/PrivateCardContext";
 import { UsePrivateContext } from "../PrivacyContext/PrivateContext";
@@ -66,7 +66,7 @@ const DetailsCardPopUp = () => {
       <button onClick={handleOpenModal()} className="btn btn-primary"></button>
       <dialog
         ref={modalRef}
-        className="modal modal-bottom sm:modal-middle bg-[#2e2828c2]"
+        className="modal modal-bottom sm:modal-middle bg-[#7474741c]"
       >
         <div className="modal-box md:w-11/12 min-w-5xl bg-[#c0c0c027]">
           <form method="dialog">
@@ -177,7 +177,9 @@ const DetailsCardPopUp = () => {
                       >
                         Add Wish List
                       </button>
-                      <button className="btn btn-primary">Buy Now</button>
+                      <Link to="/card">
+                        <button className="btn btn-primary">View</button>
+                      </Link>
                     </div>
                   </div>
                 </div>

@@ -3,6 +3,7 @@ import { PrivateCardInfo } from "../PrivateRoute/PrivateCardContext";
 import Header from "../SharedStyle/Header";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import emptyImg from "../assets/sale/empty-cart.png";
+import Swal from "sweetalert2";
 
 const WishList = () => {
   const { wishCardId, removeWishList } = useContext(PrivateCardInfo);
@@ -29,6 +30,29 @@ const WishList = () => {
     );
     setWishListData(filteredHouses);
   }, [allHouseData, wishCardId]);
+
+  // handleByeNow btn
+
+  const byNowError = () => {
+    Swal.fire({
+      title: "Sorry!\nYou can't Buy",
+      icon: "error",
+      showClass: {
+        popup: `
+          animate__animated
+          animate__fadeInUp
+          animate__faster
+        `,
+      },
+      hideClass: {
+        popup: `
+          animate__animated
+          animate__fadeOutDown
+          animate__faster
+        `,
+      },
+    });
+  };
 
   const card = (house) => {
     return (
@@ -65,7 +89,9 @@ const WishList = () => {
             >
               Remove
             </button>
-            <button className="btn btn-primary">Buy Now</button>
+            <button onClick={byNowError} className="btn btn-primary">
+              Buy Now
+            </button>
           </div>
         </div>
       </div>
