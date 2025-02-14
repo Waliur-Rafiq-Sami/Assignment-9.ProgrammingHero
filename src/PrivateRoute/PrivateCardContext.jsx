@@ -1,22 +1,33 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { Bounce, ToastContainer, toast } from "react-toastify";
+import { UsePrivateContext } from "../PrivacyContext/PrivateContext";
 
 export const PrivateCardInfo = createContext();
 
 const PrivateCardContext = ({ children }) => {
-  const [wishCardId, setWishCard] = useState(() => {
-    const storedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    return storedWishlist;
-  });
+  const { user } = useContext(UsePrivateContext);
+  const storageKey = user?.displayName
+    ? `wishlist_${user.displayName}`
+    : `wishlist_${user?.email}`;
 
-  // Save wishlist to localStorage whenever it updates
+  const [wishCardId, setWishCard] = useState([]);
+
   useEffect(() => {
-    if (wishCardId.length > 0) {
-      localStorage.setItem("wishlist", JSON.stringify(wishCardId));
+    if (storageKey) {
+      const storedWishlist = JSON.parse(localStorage.getItem(storageKey)) || [];
+      setWishCard(storedWishlist);
     }
-  }, [wishCardId]);
+  }, [storageKey]);
+
+  useEffect(() => {
+    if (storageKey) {
+      localStorage.setItem(storageKey, JSON.stringify(wishCardId));
+    }
+  }, [wishCardId, storageKey]);
 
   const handleWishList = (i) => {
+    if (!storageKey) return;
+
     const id = parseInt(i);
     if (wishCardId.includes(id)) {
       toast.error("Already in Wish List! ❌", {
@@ -30,15 +41,12 @@ const PrivateCardContext = ({ children }) => {
         theme: "light",
         transition: Bounce,
       });
-      return; // Prevent duplicate toasts
+      return;
     }
 
-    // Add item to wishlist and update localStorage immediately
-    setWishCard((prevWishlist) => {
-      const updatedList = [...prevWishlist, id];
-      localStorage.setItem("wishlist", JSON.stringify(updatedList)); // Save immediately
-      return updatedList;
-    });
+    const updatedList = [...wishCardId, id];
+    setWishCard(updatedList);
+    localStorage.setItem(storageKey, JSON.stringify(updatedList));
 
     toast.success("Added to Wish List! 🎉", {
       position: "top-right",
@@ -54,17 +62,16 @@ const PrivateCardContext = ({ children }) => {
   };
 
   const removeWishList = (i) => {
-    const id = parseInt(i);
-    const updatedList = wishCardId.filter((item) => item !== id); // Remove selected ID
+    if (!storageKey) return;
 
-    setWishCard(updatedList); // Update state FIRST
+    const id = parseInt(i);
+    const updatedList = wishCardId.filter((item) => item !== id);
+    setWishCard(updatedList);
 
     if (updatedList.length > 0) {
-      localStorage.setItem("wishlist", JSON.stringify(updatedList)); // Update localStorage
+      localStorage.setItem(storageKey, JSON.stringify(updatedList));
     } else {
-      setTimeout(() => {
-        localStorage.removeItem("wishlist"); // Ensure state updates first
-      }, 0);
+      localStorage.removeItem(storageKey);
     }
 
     toast.info("Removed from Wish List! ❌", {

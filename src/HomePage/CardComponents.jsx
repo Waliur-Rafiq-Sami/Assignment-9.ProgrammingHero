@@ -32,7 +32,7 @@ const CardComponents = () => {
 
   return (
     <div>
-      <Header></Header>
+      {/* <Header></Header> */}
       <div className="container mx-auto scroll-smooth" id="House">
         <h2 className="text-center md:py-8 md:text-6xl font-bold font-dancing">
           House information
