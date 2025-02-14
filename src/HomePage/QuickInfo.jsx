@@ -110,9 +110,11 @@ const QuickInfo = () => {
         {user ? (
           <>
             <div className="flex items-center gap-7">
-              <div className="text-xl text-[#c9681a] bg-[#a689aa4b] p-3 rounded-full hover:scale-103 hover:cursor-pointer">
-                <BsFillHousesFill />
-              </div>
+              <Link to="/card">
+                <div className="text-xl text-[#c9681a] bg-[#a689aa4b] p-3 rounded-full hover:scale-103 hover:cursor-pointer">
+                  <BsFillHousesFill />
+                </div>
+              </Link>
               <button
                 onClick={handleLogOut}
                 className="btn btn-outline md:btn-md btn-sm border-green-600 flex items-center px-2 py-1 text-lg hover:scale-105 transition-transform duration-300 hover:shadow-[#000] hover:bg-[#b9ff91dc]"
