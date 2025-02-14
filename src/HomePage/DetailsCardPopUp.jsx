@@ -154,7 +154,10 @@ const DetailsCardPopUp = () => {
                       </span>
                     </p>
                     <div className="">
-                      <button className="mr-3 btn btn-primary">Buy Now</button>
+                      {" "}
+                      <button className="mr-3 btn btn-info text-white">
+                        Add Wish List
+                      </button>
                       <button className="btn btn-primary">Buy Now</button>
                     </div>
                   </div>

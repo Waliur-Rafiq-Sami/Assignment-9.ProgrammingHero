@@ -7,12 +7,12 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
-export const UsePrivateContext = createContext();
 import { GoogleAuthProvider } from "firebase/auth";
 import auth from "./firebase.config";
 import { GithubAuthProvider } from "firebase/auth";
 import Swal from "sweetalert2";
 
+export const UsePrivateContext = createContext();
 const PrivateContext = ({ children }) => {
   const [closeEye, setCloseEye] = useState(true);
   const [isRegistration, setIsRegistration] = useState(false);

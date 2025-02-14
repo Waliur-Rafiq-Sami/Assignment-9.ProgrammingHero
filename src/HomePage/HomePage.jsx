@@ -3,8 +3,12 @@ import Header from "./../SharedStyle/Header";
 import ImageSlider from "./imageSlider";
 import CardComponents from "./CardComponents";
 import Footer from "../Footer/Footer";
+import { useContext } from "react";
+import { PrivateCardInfo } from "../PrivateRoute/PrivateCardContext";
 
 const HomePage = () => {
+  const info = useContext(PrivateCardInfo);
+  console.log(info);
   return (
     <>
       <div className="">

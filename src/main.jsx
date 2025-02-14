@@ -7,6 +7,8 @@ import HomePage from "./HomePage/HomePage";
 import ErrorPage from "./ErrorPage/ErrorPage";
 import PrivateContext from "./PrivacyContext/PrivateContext";
 import DetailsCardPopUp from "./HomePage/DetailsCardPopUp";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import PrivateCardContext from "./PrivateRoute/PrivateCardContext";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +18,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <HomePage></HomePage>,
+        element: (
+          <PrivateCardContext>
+            <HomePage></HomePage>
+          </PrivateCardContext>
+        ),
+      },
+      {
+        path: "/card",
+        element: (
+          <PrivateCardContext>
+            <PrivateRoute></PrivateRoute>,
+          </PrivateCardContext>
+        ),
       },
     ],
   },
