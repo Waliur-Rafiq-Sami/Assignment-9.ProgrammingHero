@@ -35,15 +35,9 @@ const Header = () => {
       >
         Card
       </Link>
+
       <Link
-        className="relative md:px-2 font-semibold text-gray-800 transition duration-300 hover:text-blue-600 
-             before:absolute before:bottom-0 before:left-1/2 before:w-0 before:h-[3px] before:bg-blue-600 
-             before:transition-all before:duration-300 before:ease-in-out before:rounded-full 
-             hover:before:w-full hover:before:left-0"
-      >
-        Profile
-      </Link>
-      <Link
+        to="/about"
         className="relative md:px-2 font-semibold text-gray-800 transition duration-300 hover:text-blue-600 
              before:absolute before:bottom-0 before:left-1/2 before:w-0 before:h-[3px] before:bg-blue-600 
              before:transition-all before:duration-300 before:ease-in-out before:rounded-full 
