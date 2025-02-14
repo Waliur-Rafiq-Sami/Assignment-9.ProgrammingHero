@@ -19,6 +19,7 @@
 
 import { useEffect, useState } from "react";
 import SingleCard from "./singleCard";
+import Header from "../SharedStyle/Header";
 
 const CardComponents = () => {
   const [houseInfo, setHouseInfo] = useState([]);
@@ -31,6 +32,7 @@ const CardComponents = () => {
 
   return (
     <div>
+      <Header></Header>
       <div className="container mx-auto scroll-smooth" id="House">
         <h2 className="text-center md:py-8 md:text-6xl font-bold font-dancing">
           House information

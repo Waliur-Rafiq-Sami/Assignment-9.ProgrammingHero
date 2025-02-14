@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { PrivateCardInfo } from "../PrivateRoute/PrivateCardContext";
 import Header from "../SharedStyle/Header";
-import Footer from "../Footer/Footer";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
+import emptyImg from "../assets/sale/empty-cart.png";
 
 const WishList = () => {
-  const cardValue = useContext(PrivateCardInfo);
+  const { wishCardId, removeWishList } = useContext(PrivateCardInfo);
   const [allHouseData, setAllHouseData] = useState([]);
   const [wishListData, setWishListData] = useState([]);
 
@@ -24,13 +24,11 @@ const WishList = () => {
   }, []);
 
   useEffect(() => {
-    if (allHouseData.length > 0 && cardValue.length > 0) {
-      const filteredHouses = allHouseData.filter((h) =>
-        cardValue.includes(h.id)
-      );
-      setWishListData(filteredHouses);
-    }
-  }, [allHouseData, cardValue]);
+    const filteredHouses = allHouseData.filter((h) =>
+      wishCardId.includes(h.id)
+    );
+    setWishListData(filteredHouses);
+  }, [allHouseData, wishCardId]);
 
   const card = (house) => {
     return (
@@ -61,7 +59,12 @@ const WishList = () => {
             </span>
           </p>
           <div>
-            <button className="mr-3 btn btn-warning text-white">Remove</button>
+            <button
+              onClick={() => removeWishList(house.id)}
+              className="mr-3 btn btn-warning text-white"
+            >
+              Remove
+            </button>
             <button className="btn btn-primary">Buy Now</button>
           </div>
         </div>
@@ -80,13 +83,18 @@ const WishList = () => {
           {wishListData.length > 0 ? (
             wishListData.map((a) => <div key={a.id}>{card(a)}</div>)
           ) : (
-            <p className="text-center text-gray-500 text-xl">
-              No items in your wishlist.
-            </p>
+            <>
+              <div>
+                <img src={emptyImg} alt="" />
+                <p className="text-center text-gray-500 text-2xl py-2">
+                  No items in your wishlist.
+                </p>
+              </div>
+            </>
           )}
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

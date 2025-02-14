@@ -23,6 +23,7 @@ const QuickInfo = () => {
     createUserWithGoogle,
     createUserWithGithub,
   } = useContext(UsePrivateContext);
+
   const social = (
     <div className="flex gap-1">
       <Link to="https://facebook.com" target="_blank" rel="noopener noreferrer">

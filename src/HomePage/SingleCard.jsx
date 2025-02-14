@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
-import DetailsCardPopUp from "./DetailsCardPopUp";
 import { Link } from "react-router-dom";
+import { PrivateCardInfo } from "./../PrivateRoute/PrivateCardContext";
+import { UsePrivateContext } from "../PrivacyContext/PrivateContext";
 
 const SingleCard = ({ house }) => {
   const {
@@ -14,18 +15,21 @@ const SingleCard = ({ house }) => {
     bathrooms,
     year_built,
     parking_spaces,
-    status,
     type,
     amenities,
     description,
     image,
   } = house;
 
+  const { user, loginRegistrationBtn } = useContext(UsePrivateContext);
+
+  const { handleWishList } = useContext(PrivateCardInfo);
+
   return (
-    <div className="card bg-base-100  hover:opacity-95 hover:scale-102 transition-all duration-500">
+    <div className="my-8 card bg-base-100  hover:opacity-95 hover:scale-102 transition-all duration-500 shadow-2xl">
       <Link
         to={`/${id}`}
-        className=" hover:cursor-pointer shadow-2xl rounded-2xl overflow-hidden"
+        className=" hover:cursor-pointer shadow rounded-2xl overflow-hidden"
       >
         <figure>
           <img className="" src={image} alt={image} />
@@ -74,7 +78,12 @@ const SingleCard = ({ house }) => {
           </h3>
           <p className="ml-3 text-justify">
             {description.slice(0, 200)} ... ...
-            <span className="font-semibold text-blue-500">Read More</span>
+            <Link
+              to={`/${id}`}
+              className=" hover:cursor-pointer shadow-2xl rounded-2xl overflow-hidden"
+            >
+              <span className="font-semibold text-blue-500">Read More</span>
+            </Link>
           </p>
         </div>
 
@@ -87,10 +96,15 @@ const SingleCard = ({ house }) => {
             </span>
           </p>
           <div className="">
-            <button className="mr-3 btn btn-info text-white">
+            <button
+              onClick={() => {
+                user ? handleWishList(id) : loginRegistrationBtn();
+              }}
+              className="mr-3 btn btn-info text-white"
+            >
               Add Wish List
             </button>
-            <button className="btn btn-primary">Buy Now</button>
+            <button className="btn btn-primary btn-disabled">Buy Now</button>
           </div>
         </div>
       </div>

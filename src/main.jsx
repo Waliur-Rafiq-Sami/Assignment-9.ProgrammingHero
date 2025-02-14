@@ -9,6 +9,7 @@ import PrivateContext from "./PrivacyContext/PrivateContext";
 import DetailsCardPopUp from "./HomePage/DetailsCardPopUp";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import PrivateCardContext from "./PrivateRoute/PrivateCardContext";
+import CardComponents from "./HomePage/CardComponents";
 
 const router = createBrowserRouter([
   {
@@ -18,19 +19,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: (
-          <PrivateCardContext>
-            <HomePage></HomePage>
-          </PrivateCardContext>
-        ),
+        element: <HomePage></HomePage>,
       },
       {
         path: "/card",
-        element: (
-          <PrivateCardContext>
-            <PrivateRoute></PrivateRoute>,
-          </PrivateCardContext>
-        ),
+        element: <PrivateRoute></PrivateRoute>,
+      },
+      {
+        path: "/house",
+        element: <CardComponents></CardComponents>,
       },
     ],
   },
@@ -43,7 +40,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <PrivateContext>
-      <RouterProvider router={router} />
+      <PrivateCardContext>
+        <RouterProvider router={router} />
+      </PrivateCardContext>
     </PrivateContext>
   </StrictMode>
 );

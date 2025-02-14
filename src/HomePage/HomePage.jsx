@@ -7,8 +7,6 @@ import { useContext } from "react";
 import { PrivateCardInfo } from "../PrivateRoute/PrivateCardContext";
 
 const HomePage = () => {
-  const info = useContext(PrivateCardInfo);
-  console.log(info);
   return (
     <>
       <div className="">

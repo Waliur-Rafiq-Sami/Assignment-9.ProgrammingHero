@@ -1,15 +1,22 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import HomePage from "./HomePage";
+import { PrivateCardInfo } from "../PrivateRoute/PrivateCardContext";
+import { UsePrivateContext } from "../PrivacyContext/PrivateContext";
 
 const DetailsCardPopUp = () => {
+  const { user, loginRegistrationBtn } = useContext(UsePrivateContext);
+  const { handleWishList } = useContext(PrivateCardInfo);
+
   const { id } = useParams();
   const houseId = Number(id);
   const modalRef = useRef(null);
 
   const [AllHouse, setHouse] = useState([]);
   const [house, setDetails] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("/houseData.json")
@@ -57,10 +64,16 @@ const DetailsCardPopUp = () => {
     <>
       <HomePage></HomePage>
       <button onClick={handleOpenModal()} className="btn btn-primary"></button>
-      <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box md:w-11/12 md:min-w-5xl bg-[#c0c0c017]">
+      <dialog
+        ref={modalRef}
+        className="modal modal-bottom sm:modal-middle bg-[#2e2828c2]"
+      >
+        <div className="modal-box md:w-11/12 min-w-5xl bg-[#c0c0c027]">
           <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-red-500 bg-red-300 hover:bg-red-100 border-0 hover:scale-105 transition-transform">
+            <button
+              onClick={() => navigate("/house")}
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-red-500 bg-red-300 hover:bg-red-100 border-0 hover:scale-105 transition-transform"
+            >
               ✕
             </button>
           </form>
@@ -154,8 +167,14 @@ const DetailsCardPopUp = () => {
                       </span>
                     </p>
                     <div className="">
-                      {" "}
-                      <button className="mr-3 btn btn-info text-white">
+                      <button
+                        onClick={() => {
+                          user
+                            ? houseId && handleWishList(id)
+                            : houseId && loginRegistrationBtn();
+                        }}
+                        className="mr-3 btn btn-info text-white"
+                      >
                         Add Wish List
                       </button>
                       <button className="btn btn-primary">Buy Now</button>
@@ -167,7 +186,7 @@ const DetailsCardPopUp = () => {
           </div>
         </div>
         <form method="dialog" className="modal-backdrop">
-          <button>Close</button>
+          <button onClick={() => navigate("/house")}>Close</button>
         </form>
       </dialog>
     </>
