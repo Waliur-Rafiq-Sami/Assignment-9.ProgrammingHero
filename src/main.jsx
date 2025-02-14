@@ -10,6 +10,7 @@ import DetailsCardPopUp from "./HomePage/DetailsCardPopUp";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import PrivateCardContext from "./PrivateRoute/PrivateCardContext";
 import CardComponents from "./HomePage/CardComponents";
+import Header from "./SharedStyle/Header";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,16 @@ const router = createBrowserRouter([
       },
       {
         path: "/house",
-        element: <CardComponents></CardComponents>,
+        element: (
+          <>
+            <Header></Header>
+            <CardComponents></CardComponents>,
+          </>
+        ),
+      },
+      {
+        path: "/about",
+        element: <ErrorPage />,
       },
     ],
   },
